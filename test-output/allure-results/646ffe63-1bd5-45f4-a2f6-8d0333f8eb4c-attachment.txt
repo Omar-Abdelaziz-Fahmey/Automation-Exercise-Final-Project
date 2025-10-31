@@ -1,0 +1,17 @@
+[DEBUG] - [31-10-2025 18:22:57] [main] [org.testng.TestNG] - suiteXmlPath: "C:\Users\Omar\AppData\Local\JetBrains\IdeaIC2025.2\temp-testng-customsuite.xml"
+[INFO] - [31-10-2025 18:22:58] [main] [automationexercices.listeners.TestNGListeners] - Test Execution started
+[INFO] - [31-10-2025 18:22:59] [main] [automationexercices.FileUtils] - File deleted: C:\Users\Omar\IdeaProjects\MyTestAutomationFrameWork\test-output\Logs\logs.log
+[INFO] - [31-10-2025 18:22:59] [main] [automationexercices.listeners.TestNGListeners] - Directories cleaned
+[INFO] - [31-10-2025 18:22:59] [main] [automationexercices.FileUtils] - Directory created: test-output/screenshots/
+[INFO] - [31-10-2025 18:22:59] [main] [automationexercices.FileUtils] - Directory created: test-output/recordings/
+[INFO] - [31-10-2025 18:22:59] [main] [automationexercices.FileUtils] - Directory created: src/test/resources/downloads/
+[INFO] - [31-10-2025 18:22:59] [main] [automationexercices.listeners.TestNGListeners] - Directories created
+[INFO] - [31-10-2025 18:22:59] [main] [automationexercices.utils.dataReader.PropertyReader] - Properties file loaded successfully
+[INFO] - [31-10-2025 18:22:59] [main] [automationexercices.listeners.TestNGListeners] - Properties loaded
+[INFO] - [31-10-2025 18:22:59] [main] [automationexercices.utils.report.AllureEnvironmentManager] - Allure environment variables set.
+[INFO] - [31-10-2025 18:23:01] [main] [automationexercices.utils.report.AllureBinaryManager] - Allure binaries already exist.
+[INFO] - [31-10-2025 18:23:01] [main] [automationexercices.listeners.TestNGListeners] - Allure environment set
+[INFO] - [31-10-2025 18:23:02] [main] [org.testng.internal.Utils] - [TestNG] Running:
+  C:\Users\Omar\AppData\Local\JetBrains\IdeaIC2025.2\temp-testng-customsuite.xml
+
+[INFO] - [31-10-2025 18:23:02] [main] [automationexercices.listeners.TestNGListeners] - Test Case gg started
