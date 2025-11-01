@@ -92,7 +92,7 @@ public class NavigationBarComponent {
     }
 
     @Step("Verify that logged in as username is visible")
-    public NavigationBarComponent verifyLoggedInAsVisible(String username) {
+    public NavigationBarComponent verifyLoggedInUserName(String username) {
         String actualText = driver.element().getText(userLabel);
         LogsManager.info("Verifying logged in user label. Actual: " + actualText + " | Expected: Logged in as " + username);
 
