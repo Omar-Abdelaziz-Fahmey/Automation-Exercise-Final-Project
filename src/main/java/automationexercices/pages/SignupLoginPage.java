@@ -1,6 +1,7 @@
 package automationexercices.pages;
 
 import automationexercices.drivers.GUIDriver;
+import automationexercices.pages.components.NavigationBarComponent;
 import automationexercices.utils.dataReader.PropertyReader;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -8,10 +9,11 @@ import org.openqa.selenium.By;
 public class SignupLoginPage {
     private GUIDriver driver;
     private final String signupLoginEndpoint = "/login";
+    public NavigationBarComponent navigationBar;
 
-
-    public SignupLoginPage(GUIDriver driver){
-    this.driver=driver;
+    public SignupLoginPage(GUIDriver driver) {
+        this.driver = driver;
+        navigationBar = new NavigationBarComponent(driver);
     }
 
     //locators
@@ -29,61 +31,68 @@ public class SignupLoginPage {
 
     //actions
     @Step("Navigate to Signup/Login page")
-    public SignupLoginPage navigate(){
-        driver.browser().navigateTo(PropertyReader.getProperty("baseUrlWeb")+signupLoginEndpoint);
+    public SignupLoginPage navigate() {
+        driver.browser().navigateTo(PropertyReader.getProperty("baseUrlWeb") + signupLoginEndpoint);
         return this;
     }
-    @Step ("Enter login email: {email}")
-    public SignupLoginPage enterLoginEmail(String email){
-        driver.element().type(loginEmail,email);
+
+    @Step("Enter login email: {email}")
+    public SignupLoginPage enterLoginEmail(String email) {
+        driver.element().type(loginEmail, email);
         return this;
     }
-    @Step ("Enter login password: {password}")
-    public SignupLoginPage enterLoginPassword(String password){
-        driver.element().type(loginPassword,password);
+
+    @Step("Enter login password: {password}")
+    public SignupLoginPage enterLoginPassword(String password) {
+        driver.element().type(loginPassword, password);
         return this;
     }
-    @Step ("Click on login button")
-    public SignupLoginPage clickLoginButton(){
+
+    @Step("Click on login button")
+    public SignupLoginPage clickLoginButton() {
         driver.element().click(loginButton);
         return this;
     }
-    @Step ("Enter signup name: {name}")
-    public SignupLoginPage enterSignupName(String name){
-        driver.element().type(signupName,name);
+
+    @Step("Enter signup name: {name}")
+    public SignupLoginPage enterSignupName(String name) {
+        driver.element().type(signupName, name);
         return this;
-    }
-    @Step ("Enter signup email: {email}")
-    public SignupLoginPage enterSignupEmail(String email){
-        driver.element().type(signupEmail,email);
-        return this;
-    }
-    @Step ("Click on signup button")
-    public SignupPage clickSignupButton(){
-        driver.element().click(signupButton);
-        return new SignupPage(driver);
     }
 
+    @Step("Enter signup email: {email}")
+    public SignupLoginPage enterSignupEmail(String email) {
+        driver.element().type(signupEmail, email);
+        return this;
+    }
+
+    @Step("Click on signup button")
+    public SignupLoginPage clickSignupButton() {
+        driver.element().click(signupButton);
+        return this;
+    }
 
 
     //validations
-    @Step ("Verify signup label visible")
+    @Step("Verify signup label visible")
     public SignupLoginPage getSignupLabelText() {
         driver.verification().isElementVisible(signupLabel);
         return this;
     }
+
     @Step("Verify login error message: {expectedMessage}")
-    public SignupLoginPage verifyLoginErrorMessage(String expectedMessage){
+    public SignupLoginPage verifyLoginErrorMessage(String expectedMessage) {
         String actualMessage = driver.element().getText(loginError);
-        driver.verification().Equals(actualMessage,expectedMessage,"Login error message does not match");
+        driver.verification().Equals(actualMessage, expectedMessage, "Login error message does not match");
         return this;
     }
+
     @Step("Verify register error message: {expectedMessage}")
-    public SignupLoginPage verifyRegisterErrorMessage(String expectedMessage){
+    public SignupLoginPage verifyRegisterErrorMessage(String expectedMessage) {
         String actualMessage = driver.element().getText(registerError);
-        driver.verification().Equals(actualMessage,expectedMessage,"Register error message does not match");
+        driver.verification().Equals(actualMessage, expectedMessage, "Register error message does not match");
         return this;
-        }
+    }
 
 
 }
