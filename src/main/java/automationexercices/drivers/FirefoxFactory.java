@@ -30,7 +30,6 @@ public class FirefoxFactory extends AbstractDriver {
         options.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
         options.setCapability(CapabilityType.UNHANDLED_PROMPT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE);
         FirefoxProfile profile = new FirefoxProfile();
-        profile.addExtension(haramBlurExtension);
         options.setProfile(profile);
         switch (PropertyReader.getProperty("executionType"))
         {

@@ -1,2 +1,2 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","86","gg","Automation Exercise","2025-10-31","passed","2025-10-31","TEST","MyTestAutomationFrameWork","TEST","gg"
+"","28082","signUpTC","Default Suite","2025-11-01","passed","2025-11-01","TEST","Automation-Exercise-Project","TEST","signUpTC"
