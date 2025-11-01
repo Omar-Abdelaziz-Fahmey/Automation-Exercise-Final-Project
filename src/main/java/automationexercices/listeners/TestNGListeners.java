@@ -1,7 +1,6 @@
 package automationexercices.listeners;
 
 import automationexercices.FileUtils;
-import automationexercices.drivers.UITest;
 import automationexercices.drivers.WebDriverProvider;
 import automationexercices.media.ScreenRecordManager;
 import automationexercices.media.ScreenshotsManager;
@@ -17,10 +16,7 @@ import org.testng.*;
 
 import java.io.File;
 
-public class TestNGListeners implements ISuiteListener, IExecutionListener, IInvokedMethodListener, ITestListener {
-    public void onStart(ISuite suite) {
-        suite.getXmlSuite().setName("Automation Exercise");
-    }
+public class TestNGListeners implements IExecutionListener, IInvokedMethodListener, ITestListener {
     public void onExecutionStart() {
         LogsManager.info("Test Execution started");
         cleanTestOutputDirectories();
@@ -34,8 +30,8 @@ public class TestNGListeners implements ISuiteListener, IExecutionListener, IInv
     }
 
     public void onExecutionFinish() {
-        AllureReportGenerator.copyHistory();
         AllureReportGenerator.generateReports(false);
+        AllureReportGenerator.copyHistory();
         AllureReportGenerator.generateReports(true);
         AllureReportGenerator.openReport(AllureReportGenerator.renameReport());
         LogsManager.info("Test Execution Finished");
@@ -44,10 +40,7 @@ public class TestNGListeners implements ISuiteListener, IExecutionListener, IInv
 
     public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
         if (method.isTestMethod()) {
-            if (testResult.getInstance() instanceof UITest)
-            {
-                ScreenRecordManager.startRecording();
-            }
+            ScreenRecordManager.startRecording();
             LogsManager.info("Test Case " + testResult.getName() + " started");
         }
     }
@@ -56,23 +49,17 @@ public class TestNGListeners implements ISuiteListener, IExecutionListener, IInv
         WebDriver driver = null;
         if (method.isTestMethod())
         {
-            if (testResult.getInstance() instanceof UITest)
-            {
-                ScreenRecordManager.stopRecording(testResult.getName());
-                if (testResult.getInstance() instanceof WebDriverProvider provider)
-                    driver = provider.getWebDriver(); //initialize driver from WebDriverProvider
-                switch (testResult.getStatus()){
-                    case ITestResult.SUCCESS -> ScreenshotsManager.takeFullPageScreenshot(driver,"passed-" + testResult.getName());
-                    case ITestResult.FAILURE -> ScreenshotsManager.takeFullPageScreenshot(driver,"failed-" + testResult.getName());
-                    case ITestResult.SKIP -> ScreenshotsManager.takeFullPageScreenshot(driver,"skipped-" + testResult.getName());
-                }
-                AllureAttachmentManager.attachRecords(testResult.getName());
-            }
-
+            ScreenRecordManager.stopRecording(testResult.getName());
             Validation.assertAll(testResult);
-
+            if (testResult.getInstance() instanceof WebDriverProvider provider)
+                driver = provider.getWebDriver(); //initialize driver from WebDriverProvider
+            switch (testResult.getStatus()){
+                case ITestResult.SUCCESS -> ScreenshotsManager.takeFullPageScreenshot(driver,"passed-" + testResult.getName());
+                case ITestResult.FAILURE -> ScreenshotsManager.takeFullPageScreenshot(driver,"failed-" + testResult.getName());
+                case ITestResult.SKIP -> ScreenshotsManager.takeFullPageScreenshot(driver,"skipped-" + testResult.getName());
+            }
             AllureAttachmentManager.attachLogs();
-
+            AllureAttachmentManager.attachRecords(testResult.getName());
         }
     }
 
@@ -96,15 +83,12 @@ public class TestNGListeners implements ISuiteListener, IExecutionListener, IInv
         FileUtils.cleanDirectory(AllureConstants.RESULTS_FOLDER.toFile());
         FileUtils.cleanDirectory(new File(ScreenshotsManager.SCREENSHOTS_PATH));
         FileUtils.cleanDirectory(new File(ScreenRecordManager.RECORDINGS_PATH));
-        FileUtils.cleanDirectory(new File("src/test/resources/downloads/"));
-        FileUtils.forceDelete(new File(LogsManager.LOGS_PATH +"logs.log"));
+        FileUtils.cleanDirectory(new File(LogsManager.LOGS_PATH));
     }
 
     private void createTestOutputDirectories() {
         // Implement logic to create test output directories
         FileUtils.createDirectory(ScreenshotsManager.SCREENSHOTS_PATH);
         FileUtils.createDirectory(ScreenRecordManager.RECORDINGS_PATH);
-        FileUtils.createDirectory("src/test/resources/downloads/");
-
     }
 }
