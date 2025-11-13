@@ -54,6 +54,11 @@ public class RegisterTest extends BaseTest {
                 .enterMobileNumber(testData.getJsonData("mobileNumber"))
                 .clickCreateAccountButton()
                 .verifyAccountCreated();
+
+        new UserManagementAPI().deleteUserAccount(
+                        testData.getJsonData("email") + timestamp + "@gmail.com",
+                        testData.getJsonData("password"))
+                .verifyUserDeletedSuccessfully();
     }
 
     @Description("Verify user can't register with existing email")
@@ -84,6 +89,12 @@ public class RegisterTest extends BaseTest {
                 .enterSignupName(testData.getJsonData("name"))
                 .clickSignupButton()
                 .verifyRegisterErrorMessage(testData.getJsonData("messages.error"));
+
+
+        new UserManagementAPI().deleteUserAccount(
+                        testData.getJsonData("email") + timestamp + "@gmail.com",
+                        testData.getJsonData("password"))
+                .verifyUserDeletedSuccessfully();
 
 
     }

@@ -42,9 +42,9 @@ public class NavigationBarComponent {
     }
 
     @Step("Click on Products button")
-    public ProductPage clickProductsButton() {
+    public ProductsPage clickProductsButton() {
         driver.element().click(productsButton);
-        return new ProductPage(driver);
+        return new ProductsPage(driver);
     }
 
     @Step("Click on Cart Button")
