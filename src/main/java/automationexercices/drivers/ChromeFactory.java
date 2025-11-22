@@ -46,7 +46,9 @@ public class ChromeFactory extends AbstractDriver {
                 options.addArguments("--headless=new");
             }
         }
-        options.setPageLoadStrategy(PageLoadStrategy.EAGER);
+       // options.setPageLoadStrategy(PageLoadStrategy.EAGER);
+        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+
         return options;
     }
 
