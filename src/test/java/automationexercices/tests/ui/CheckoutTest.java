@@ -15,14 +15,14 @@ import org.testng.annotations.Test;
 
 @Epic("Checkout Management")
 @Feature("UI Checkout Management")
-@Story("Checkout Management")
-@Severity(SeverityLevel.CRITICAL)
 @Owner("Omar")
-
 public class CheckoutTest extends BaseTest {
     String timestamp = TimeManager.getSimpleTimestamp();
 
-    @Test
+    @Test(groups = {"regression", "smoke", "checkout", "setup"})
+    @Story("Test Data Setup")
+    @Description("Create a new user account via API as a precondition for checkout flow testing")
+    @Severity(SeverityLevel.CRITICAL)
     public void registerNewAccount() {
         new UserManagementAPI().createRegisterUserAccount(
                         testData.getJsonData("name"),
@@ -45,7 +45,11 @@ public class CheckoutTest extends BaseTest {
                 )
                 .verifyUserCreatedSuccessfully();
     }
-    @Test(dependsOnMethods = "registerNewAccount")
+
+    @Test(dependsOnMethods = "registerNewAccount", groups = {"regression", "smoke", "checkout", "authentication"})
+    @Story("User Authentication")
+    @Description("Verify that user can successfully login with valid credentials and username is displayed correctly")
+    @Severity(SeverityLevel.CRITICAL)
     public void loginToAccount() {
         new SignupLoginPage(driver).navigate()
                 .enterLoginEmail(testData.getJsonData("email") + timestamp + "@gmail.com")
@@ -54,7 +58,11 @@ public class CheckoutTest extends BaseTest {
                 .navigationBar
                 .verifyLoggedInUserName(testData.getJsonData("name"));
     }
-    @Test(dependsOnMethods = {"loginToAccount","registerNewAccount"})
+
+    @Test(dependsOnMethods = {"loginToAccount","registerNewAccount"}, groups = {"regression", "smoke", "checkout", "cart"})
+    @Story("Shopping Cart Management")
+    @Description("Verify that products can be added to cart and cart displays correct product details including name, price, quantity and total")
+    @Severity(SeverityLevel.CRITICAL)
     public void addProductToCart() {
         new ProductsPage(driver)
                 .navigate()
@@ -68,7 +76,11 @@ public class CheckoutTest extends BaseTest {
                         testData.getJsonData("product.total")
                 );
     }
-    @Test(dependsOnMethods ={"addProductToCart","loginToAccount","registerNewAccount"} )
+
+    @Test(dependsOnMethods ={"addProductToCart","loginToAccount","registerNewAccount"}, groups = {"regression", "smoke", "checkout", "e2e"})
+    @Story("Checkout Process")
+    @Description("Verify complete checkout process including delivery and billing address validation for logged-in user with products in cart")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkout() {
         new CartPage(driver)
                 .clickOnProceedToCheckout()
@@ -100,7 +112,10 @@ public class CheckoutTest extends BaseTest {
                 );
     }
 
-    @Test(dependsOnMethods = {"checkout","loginToAccount","registerNewAccount"})
+    @Test(dependsOnMethods = {"checkout","loginToAccount","registerNewAccount"}, groups = {"regression", "cleanup"})
+    @Story("Test Data Cleanup")
+    @Description("Delete the test user account created during test execution to maintain clean test environment")
+    @Severity(SeverityLevel.MINOR)
     public void deleteAccountAsPostCondition() {
         new UserManagementAPI()
                 .deleteUserAccount( testData.getJsonData("email") + timestamp + "@gmail.com",
@@ -110,20 +125,14 @@ public class CheckoutTest extends BaseTest {
     }
 
     //Configurations
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     protected void setUp() {
         testData = new JsonReader("checkout-data");
         driver = new GUIDriver();
     }
 
-
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void tearDown() {
         driver.quitDriver();
     }
-
-
-
-
-
 }
