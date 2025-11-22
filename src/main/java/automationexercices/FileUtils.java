@@ -5,6 +5,10 @@ import automationexercices.utils.logs.LogsManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.apache.commons.io.FileUtils.copyFile;
 
@@ -74,6 +78,18 @@ public class FileUtils {
         String filePath = USER_DIR + "/src/test/resources/downloads/" ;
         File file = new File(filePath+ fileName);
         return file.exists();
+    }
+
+    //write text to a file
+    public static void writeToFile(String filePath, String content) {
+        try {
+            Path path = Paths.get(USER_DIR).resolve(filePath);
+            Files.createDirectories(path.getParent());
+            Files.writeString(path, content, StandardCharsets.UTF_8);
+            LogsManager.info("Text written to file:", filePath);
+        } catch (IOException e) {
+            LogsManager.error("Failed to write text to file:", filePath, e.getMessage());
+        }
     }
 
 }
