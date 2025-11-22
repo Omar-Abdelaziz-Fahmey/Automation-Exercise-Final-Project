@@ -30,8 +30,8 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
     }
 
     public void onExecutionFinish() {
-        AllureReportGenerator.generateReports(false);
         AllureReportGenerator.copyHistory();
+        AllureReportGenerator.generateReports(false);
         AllureReportGenerator.generateReports(true);
         AllureReportGenerator.openReport(AllureReportGenerator.renameReport());
         LogsManager.info("Test Execution Finished");
@@ -47,16 +47,18 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
 
     public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
         WebDriver driver = null;
-        if (method.isTestMethod())
-        {
+        if (method.isTestMethod()) {
             ScreenRecordManager.stopRecording(testResult.getName());
             Validation.assertAll(testResult);
             if (testResult.getInstance() instanceof WebDriverProvider provider)
                 driver = provider.getWebDriver(); //initialize driver from WebDriverProvider
-            switch (testResult.getStatus()){
-                case ITestResult.SUCCESS -> ScreenshotsManager.takeFullPageScreenshot(driver,"passed-" + testResult.getName());
-                case ITestResult.FAILURE -> ScreenshotsManager.takeFullPageScreenshot(driver,"failed-" + testResult.getName());
-                case ITestResult.SKIP -> ScreenshotsManager.takeFullPageScreenshot(driver,"skipped-" + testResult.getName());
+            switch (testResult.getStatus()) {
+                case ITestResult.SUCCESS ->
+                        ScreenshotsManager.takeFullPageScreenshot(driver, "passed-" + testResult.getName());
+                case ITestResult.FAILURE ->
+                        ScreenshotsManager.takeFullPageScreenshot(driver, "failed-" + testResult.getName());
+                case ITestResult.SKIP ->
+                        ScreenshotsManager.takeFullPageScreenshot(driver, "skipped-" + testResult.getName());
             }
             AllureAttachmentManager.attachLogs();
             AllureAttachmentManager.attachRecords(testResult.getName());
@@ -83,12 +85,15 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
         FileUtils.cleanDirectory(AllureConstants.RESULTS_FOLDER.toFile());
         FileUtils.cleanDirectory(new File(ScreenshotsManager.SCREENSHOTS_PATH));
         FileUtils.cleanDirectory(new File(ScreenRecordManager.RECORDINGS_PATH));
-        FileUtils.cleanDirectory(new File(LogsManager.LOGS_PATH));
+        FileUtils.cleanDirectory(new File("src/test/resources/downloads/"));
+        FileUtils.forceDelete(new File(LogsManager.LOGS_PATH + "logs.log"));
     }
 
     private void createTestOutputDirectories() {
         // Implement logic to create test output directories
         FileUtils.createDirectory(ScreenshotsManager.SCREENSHOTS_PATH);
         FileUtils.createDirectory(ScreenRecordManager.RECORDINGS_PATH);
+        FileUtils.createDirectory("src/test/resources/downloads/");
+
     }
 }
