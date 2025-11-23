@@ -17,6 +17,7 @@ public class CartPage {
 
     //locators
     private final By proceedToCheckoutButton = By.xpath("//a[.='Proceed To Checkout']");
+    private final By registerLoginButton = By.xpath("//a[.='Register / Login']");
 
     //dynamic locators
     private By productName(String productName) {
@@ -56,6 +57,18 @@ public class CartPage {
         driver.element().click(removeProductDL(productName));
         return this;
     }
+    @Step("Click on Proceed To Checkout Button Without Register")
+    public CartPage clickOnProceedToCheckoutWithOutRegister() {
+        driver.element().click(proceedToCheckoutButton);
+        return this;
+    }
+    @Step("Click on Register / Login Button")
+    public SignupLoginPage clickOnRegisterLogin() {
+        driver.element().click(registerLoginButton);
+        return new SignupLoginPage(driver);
+    }
+
+
 
 
     //Validations
