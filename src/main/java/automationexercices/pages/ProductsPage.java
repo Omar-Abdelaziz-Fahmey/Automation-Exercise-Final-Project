@@ -2,6 +2,7 @@ package automationexercices.pages;
 
 import automationexercices.drivers.GUIDriver;
 import automationexercices.pages.components.NavigationBarComponent;
+import automationexercices.pages.components.SubscriptionComponent;
 import automationexercices.utils.dataReader.PropertyReader;
 import automationexercices.utils.logs.LogsManager;
 import automationexercices.validations.Validation;
@@ -11,10 +12,12 @@ import org.openqa.selenium.By;
 public class ProductsPage {
     private GUIDriver driver;
     public NavigationBarComponent navigationBar;
+    public SubscriptionComponent subscriptionBar;
     final private String productPage = "/products";
     public ProductsPage(GUIDriver driver){
         this.driver=driver;
         this.navigationBar=new NavigationBarComponent(driver);
+        this.subscriptionBar=new SubscriptionComponent(driver);
     }
 
     //locators
