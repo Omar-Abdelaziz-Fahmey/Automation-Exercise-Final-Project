@@ -28,13 +28,9 @@ public class ProductsPage {
     private final By continueShoppingButton = By.cssSelector(".modal-footer >button");
 
 
-// Dynamic Locators
+    //dynamic locators
     private By productName(String productName) {
         return By.xpath("//div[@class='features_items'] //div[@class='overlay-content'] /p[.='" + productName + "']");
-    }
-
-    private By categoryName(String categoryName) {
-        return By.cssSelector("[href=\"#"+categoryName+"\"]");
     }
 
     private By productPrice(String productName) {
@@ -45,13 +41,16 @@ public class ProductsPage {
         return By.xpath("//div[@class='features_items'] //div[@class='productinfo text-center'] /p[.='" + productName + "']");
     }
 
+
     private By addToCartButton(String productName) {
-        return By.xpath("//div[@class='features_items'] //div[@class='productinfo text-center'] /p[.='" + productName + "'] //following-sibling::a");
+        return By.xpath("//div[@class='features_items'] //div[@class='overlay-content'] /p[.='" + productName + "'] //following-sibling::a");
+
     }
 
     private By viewProduct(String productName) {
         return By.xpath("//p[.='" + productName + "'] //following::div[@class='choose'][1]");
     }
+
 
 
 
