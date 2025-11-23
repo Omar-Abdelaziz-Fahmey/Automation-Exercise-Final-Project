@@ -54,9 +54,9 @@ public class NavigationBarComponent {
     }
 
     @Step("Click on Logout Button")
-    public LogoutPage clickOnLogoutButton() {
+    public SignupLoginPage clickOnLogoutButton() {
         driver.element().click(logoutButton);
-        return new LogoutPage(driver);
+        return new SignupLoginPage(driver);
     }
 
     @Step("Click on Signup/Login Button")
@@ -84,6 +84,13 @@ public class NavigationBarComponent {
     }
 
     //validations
+
+
+    @Step("Verify that user is logged out into Login Page")
+    public SignupLoginPage verifyLogoutButtonNotVisible() {
+        driver.verification().isElementNotVisible(logoutButton);
+        return new SignupLoginPage(driver);
+    }
 
     @Step("Verify that Home Page is visible successfully")
     public NavigationBarComponent verifyHomePageVisible() {
