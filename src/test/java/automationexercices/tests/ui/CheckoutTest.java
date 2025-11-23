@@ -124,6 +124,16 @@ public class CheckoutTest extends BaseTest {
                 .verifyUserDeletedSuccessfully();
     }
 
+
+
+
+
+
+
+
+
+
+
     //Configurations
     @BeforeClass(alwaysRun = true)
     protected void setUp() {
