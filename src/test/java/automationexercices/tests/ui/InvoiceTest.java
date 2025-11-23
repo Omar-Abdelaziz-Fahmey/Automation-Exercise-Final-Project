@@ -9,6 +9,7 @@ import automationexercices.tests.BaseTest;
 import automationexercices.utils.TimeManager;
 import automationexercices.utils.dataReader.JsonReader;
 import io.qameta.allure.*;
+import org.checkerframework.checker.units.qual.C;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -35,9 +36,9 @@ public class InvoiceTest  extends BaseTest {
                         testData.getJsonData("address1"),
                         testData.getJsonData("address2"),
                         testData.getJsonData("country"),
+                        testData.getJsonData("zipcode"),
                         testData.getJsonData("state"),
                         testData.getJsonData("city"),
-                        testData.getJsonData("zipcode"),
                         testData.getJsonData("mobileNumber")
                 )
                 .verifyUserCreatedSuccessfully();
@@ -129,6 +130,145 @@ public class InvoiceTest  extends BaseTest {
                         ))
                 .verifyUserDeletedSuccessfully();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Test(dependsOnMethods = {"deleteAccountAsPostCondition"})
+    public void verifyProductDetailsOnCartWithOutLogInTC() {
+        new ProductsPage(driver)
+                .navigate()
+                .clickOnAddToCart(testData.getJsonData("product.name"))
+                .validateProductAddedToCart(testData.getJsonData("messages.cartAdded"))
+                .clickOnViewCart()
+                .verifyProductDetailsOnCart(
+                        testData.getJsonData("product.name"),
+                        testData.getJsonData("product.price"),
+                        testData.getJsonData("product.quantity"),
+                        testData.getJsonData("product.total")
+                );
+    }
+    @Test(dependsOnMethods = {"verifyProductDetailsOnCartWithOutLogInTC"})
+    public void checkoutWithoutRegister() {
+        new CartPage(driver)
+                .clickOnProceedToCheckoutWithOutRegister()
+                .clickOnRegisterLogin()
+                .verifySignupLabelVisible();
+
+    }
+
+    @Test(dependsOnMethods = {"checkoutWithoutRegister","verifyProductDetailsOnCartWithOutLogInTC"})
+    public void registerDuringCheckout() {
+        new SignupLoginPage(driver)
+                .enterSignupEmail(testData.getJsonData("email") + timestamp + "@gmail.com")
+                .enterSignupName(testData.getJsonData("name"))
+                .clickSignupButton();
+
+
+        new SignupPage(driver)
+                .chooseTitle(testData.getJsonData("titleMale"))
+                .enterPassword(testData.getJsonData("password"))
+                .selectDateOfBirth(
+                        testData.getJsonData("day"),
+                        testData.getJsonData("month"),
+                        testData.getJsonData("year")
+                )
+                .subscribeToNewsletter()
+                .receiveSpecialOffers()
+                .enterFirstName(testData.getJsonData("firstName"))
+                .enterLastName(testData.getJsonData("lastName"))
+                .enterCompany(testData.getJsonData("companyName"))
+                .enterAddress1(testData.getJsonData("address1"))
+                .enterAddress2(testData.getJsonData("address2"))
+                .selectCountry(testData.getJsonData("country"))
+                .enterState(testData.getJsonData("state"))
+                .enterCity(testData.getJsonData("city"))
+                .enterZipcode(testData.getJsonData("zipcode"))
+                .enterMobileNumber(testData.getJsonData("mobileNumber"))
+                .clickCreateAccountButton()
+                .verifyAccountCreated();
+    }
+    @Test(dependsOnMethods = {"registerDuringCheckout","checkoutWithoutRegister","verifyProductDetailsOnCartWithOutLogInTC"})
+    public void completeCheckoutAfterRegistering() {
+        new CartPage(driver)
+                .navigate()
+                .verifyProductDetailsOnCart(
+                        testData.getJsonData("product.name"),
+                        testData.getJsonData("product.price"),
+                        testData.getJsonData("product.quantity"),
+                        testData.getJsonData("product.total")
+                )
+                .clickOnProceedToCheckout()
+                .verifyDeliveryAddress(
+                        testData.getJsonData("titleMale"),
+                        testData.getJsonData("firstName"),
+                        testData.getJsonData("lastName"),
+                        testData.getJsonData("companyName"),
+                        testData.getJsonData("address1"),
+                        testData.getJsonData("address2"),
+                        testData.getJsonData("city"),
+                        testData.getJsonData("state"),
+                        testData.getJsonData("zipcode"),
+                        testData.getJsonData("country"),
+                        testData.getJsonData("mobileNumber")
+                )
+                .verifyBillingAddress(
+                        testData.getJsonData("titleMale"),
+                        testData.getJsonData("firstName"),
+                        testData.getJsonData("lastName"),
+                        testData.getJsonData("companyName"),
+                        testData.getJsonData("address1"),
+                        testData.getJsonData("address2"),
+                        testData.getJsonData("city"),
+                        testData.getJsonData("state"),
+                        testData.getJsonData("zipcode"),
+                        testData.getJsonData("country"),
+                        testData.getJsonData("mobileNumber")
+                );
+
+    }
+
+    @Test(dependsOnMethods = {"completeCheckoutAfterRegistering","registerDuringCheckout","checkoutWithoutRegister","verifyProductDetailsOnCartWithOutLogInTC"})
+    public void paymentAfterRegisteringTest() {
+        new CheckoutPage(driver)
+                .clickOnPlaceOrder()
+                .fillCardInfo(testData.getJsonData("card.cardName")
+                        ,testData.getJsonData("card.cardNumber"),
+                        testData.getJsonData("card.cvc")
+                        , testData.getJsonData("card.exMonth")
+                        , testData.getJsonData("card.exYear")
+                )
+                .verifyPaymentSuccessMessage(testData.getJsonData("messages.paymentSuccess"));
+    }
+
+    @Test(dependsOnMethods = {"paymentAfterRegisteringTest","completeCheckoutAfterRegistering","registerDuringCheckout","checkoutWithoutRegister","verifyProductDetailsOnCartWithOutLogInTC"})
+    public void downloadInvoiceAfterRegisteringTest() {
+        new PaymentPage(driver)
+                .clickOnDownloadInvoiceButton()
+                .verifyDownloadedFile(testData.getJsonData("invoiceName"));
+    }
+
+    @Test(dependsOnMethods ={"downloadInvoiceAfterRegisteringTest"} )
+    public void deleteAccountAsPostConditionAfterRegisteringTest() {
+        new UserManagementAPI()
+                .deleteUserAccount( testData.getJsonData("email") + timestamp + "@gmail.com",
+                        testData.getJsonData("password"
+                        ))
+                .verifyUserDeletedSuccessfully();
+    }
+
+
+
     //Configurations
     @BeforeClass
     protected void setUp() {
