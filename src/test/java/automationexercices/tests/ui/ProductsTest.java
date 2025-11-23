@@ -43,6 +43,17 @@ public class ProductsTest extends BaseTest {
     }
 
 
+    @Test
+    @Description("Verify Subscription in Product page")
+    public void verifySubscriptionInProductPageTest() {
+        new ProductsPage(driver).navigate()
+                .subscriptionBar
+                .enterSubscriptionEmail(testData.getJsonData("subscription.email"))
+                .validateSubscriptionSuccessMessage(testData.getJsonData("messages.subscriptionSuccess"));
+
+
+    }
+
 
 
     @BeforeClass
