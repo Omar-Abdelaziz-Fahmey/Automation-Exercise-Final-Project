@@ -45,6 +45,19 @@ public abstract class BaseAssertion {
         assertTrue(flag, "Element is not visible: " + locator);
     }
 
+    public void isElementNotVisible(By locator) {
+        boolean flag = waitManager.fluentWait().until(driver1 ->
+        {
+            try {
+                driver1.findElement(locator).isDisplayed();
+                return false;
+            } catch (Exception e) {
+                return true;
+            }
+        });
+        assertTrue(flag, "Element is visible: " + locator);
+    }
+
     // verify page url
     public void assertPageUrl(String expectedUrl) {
         String actualUrl = driver.getCurrentUrl();
