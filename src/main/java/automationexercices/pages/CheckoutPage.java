@@ -33,6 +33,8 @@ public class CheckoutPage {
     private final By billingCountry = By.xpath("//ul[@id='address_invoice'] /li[@class='address_country_name']");
     private final By billingPhone = By.xpath("//ul[@id='address_invoice'] /li[@class='address_phone']");
 
+
+
     //actions
     @Step("Navigate To Checkout Page")
     public CheckoutPage navigate() {
@@ -54,7 +56,7 @@ public class CheckoutPage {
                 .Equals(driver.element().getText(deliveryCompany), company, " Delivery Company is not matched")
                 .Equals(driver.element().getText(deliveryAddress1), address1, " Delivery Address1 is not matched")
                 .Equals(driver.element().getText(deliveryAddress2), address2, " Delivery Address2 is not matched")
-                .Equals(driver.element().getText(deliveryCityStateZip), (zip + " " +city+" " + state), " Delivery CityStateZip is not matched")
+                .Equals(driver.element().getText(deliveryCityStateZip), (city+" "+state+" "+zip), " Delivery CityStateZip is not matched")
                 .Equals(driver.element().getText(deliveryCountry), country, " Delivery Country is not matched")
                 .Equals(driver.element().getText(deliveryPhone), phone, " Delivery Phone is not matched");
         return this;
@@ -68,7 +70,7 @@ public class CheckoutPage {
                 .Equals(driver.element().getText(billingCompany), company, " Billing Company is not matched")
                 .Equals(driver.element().getText(deliveryAddress1), address1, " Billing Address1 is not matched")
                 .Equals(driver.element().getText(billingAddress2), address2, " Billing Address2 is not matched")
-                .Equals(driver.element().getText(billingCityStateZip), (zip + " " +city+" " + state), " Billing CityStateZip is not matched")
+                .Equals(driver.element().getText(billingCityStateZip), (city+" "+state+" "+zip), " Billing CityStateZip is not matched")
                 .Equals(driver.element().getText(billingCountry), country, " Billing Country is not matched")
                 .Equals(driver.element().getText(billingPhone), phone, " Billing Phone is not matched");
         return this;
