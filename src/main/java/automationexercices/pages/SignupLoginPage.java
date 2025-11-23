@@ -75,7 +75,7 @@ public class SignupLoginPage {
 
     //validations
     @Step("Verify signup label visible")
-    public SignupLoginPage getSignupLabelText() {
+    public SignupLoginPage verifySignupLabelVisible() {
         driver.verification().isElementVisible(signupLabel);
         return this;
     }

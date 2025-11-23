@@ -16,16 +16,16 @@ import org.testng.annotations.Test;
 
 @Epic("Automation Exercise")
 @Feature("UI User Management")
-@Story("User Register")
-@Severity(SeverityLevel.CRITICAL)
 @Owner("Omar")
 public class RegisterTest extends BaseTest {
     String timestamp = TimeManager.getSimpleTimestamp();
 
 
     //Test
-    @Description("Verify user can register successfully")
-    @Test
+    @Test(groups = {"regression", "smoke", "register"})
+    @Story("User Registration - Happy Path")
+    @Description("Verify that a new user can successfully register with valid data and complete the registration process")
+    @Severity(SeverityLevel.CRITICAL)
     public void verifyUserCanRegisterSuccessfullyTC() {
         new SignupLoginPage(driver).navigate()
                 .enterSignupName(testData.getJsonData("name"))
@@ -61,8 +61,10 @@ public class RegisterTest extends BaseTest {
                 .verifyUserDeletedSuccessfully();
     }
 
-    @Description("Verify user can't register with existing email")
-    @Test
+    @Test(groups = {"regression", "negative", "register"})
+    @Story("User Registration - Negative Scenarios")
+    @Description("Verify that appropriate error message is displayed when attempting to register with an already existing email address")
+    @Severity(SeverityLevel.NORMAL)
     public void verifyErrorMessageWhenRegisteringWithExistingEmailTC() {
         new UserManagementAPI().createRegisterUserAccount(
                         testData.getJsonData("name"),
@@ -102,18 +104,18 @@ public class RegisterTest extends BaseTest {
 
     //Configurations
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     protected void preCondition() {
         testData = new JsonReader("register-data");
     }
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setUp() {
         driver = new GUIDriver();
         new NavigationBarComponent(driver).navigate();
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void tearDown() {
         driver.quitDriver();
     }
