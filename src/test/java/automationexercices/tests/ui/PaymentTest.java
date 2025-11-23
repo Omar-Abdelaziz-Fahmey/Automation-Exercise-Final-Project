@@ -39,9 +39,9 @@ public class PaymentTest extends BaseTest {
                         testData.getJsonData("address1"),
                         testData.getJsonData("address2"),
                         testData.getJsonData("country"),
+                        testData.getJsonData("zipcode"),
                         testData.getJsonData("state"),
                         testData.getJsonData("city"),
-                        testData.getJsonData("zipcode"),
                         testData.getJsonData("mobileNumber")
                 )
                 .verifyUserCreatedSuccessfully();

@@ -26,7 +26,7 @@ public class CheckoutTest extends BaseTest {
     public void registerNewAccount() {
         new UserManagementAPI().createRegisterUserAccount(
                         testData.getJsonData("name"),
-                        testData.getJsonData("email") + timestamp  + "@gmail.com",
+                        testData.getJsonData("email") + timestamp + "@gmail.com",
                         testData.getJsonData("password"),
                         testData.getJsonData("titleMale"),
                         testData.getJsonData("day"),
@@ -38,9 +38,9 @@ public class CheckoutTest extends BaseTest {
                         testData.getJsonData("address1"),
                         testData.getJsonData("address2"),
                         testData.getJsonData("country"),
+                        testData.getJsonData("zipcode"),
                         testData.getJsonData("state"),
                         testData.getJsonData("city"),
-                        testData.getJsonData("zipcode"),
                         testData.getJsonData("mobileNumber")
                 )
                 .verifyUserCreatedSuccessfully();
