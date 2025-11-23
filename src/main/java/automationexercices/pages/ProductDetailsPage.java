@@ -26,6 +26,11 @@ public class ProductDetailsPage {
     private final By reviewButton = new By.ByCssSelector("#button-review");
     private final By reviewMsg = By.cssSelector("#review-section span");
 
+    private final By quantity = new By.ByCssSelector("#quantity");
+    private final By addToCartButton = new By.ByCssSelector("*[type=button]");
+
+
+
 
     //actions
     @Step("Navigating to product details")
@@ -42,6 +47,18 @@ public class ProductDetailsPage {
         driver.element().click(reviewButton);
         return this;
     }
+    @Step("set product quantity")
+    public ProductDetailsPage setProductQuantity(String quantity) {
+        driver.element().type(this.quantity, quantity);
+        return this;
+    }
+
+    @Step("click on add to cart")
+    public ProductsPage clickOnAddToCart() {
+        driver.element().click(addToCartButton);
+        return new ProductsPage(driver);
+    }
+
 
     //validations
     @Step("verify product details")
