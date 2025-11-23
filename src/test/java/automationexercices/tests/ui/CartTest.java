@@ -14,12 +14,13 @@ import org.testng.annotations.Test;
 @Epic("Automation Exercise")
 @Feature("UI Product Management")
 @Story("Cart Management")
-@Severity(SeverityLevel.CRITICAL)
 @Owner("Omar")
 public class CartTest extends BaseTest {
 
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
+
     public void verifyProductDetailsOnCartWithOutLogInTC(){
         new ProductsPage(driver).navigate()
                 .clickOnAddToCart(testData.getJsonData("product.name"))
@@ -31,6 +32,24 @@ public class CartTest extends BaseTest {
                         testData.getJsonData("product.quantity"),
                         testData.getJsonData("product.total")
                 );
+    }
+    @Test
+    @Description("Verify product quantity in cart")
+    @Severity(SeverityLevel.CRITICAL)
+    public void verifyProductQuantityInCartTC(){
+        new ProductsPage(driver).navigate()
+                .clickOnViewProduct(testData.getJsonData("product2.name"))
+                .setProductQuantity(testData.getJsonData("product2.quantity"))
+                .clickOnAddToCart()
+                .validateProductAddedToCart(testData.getJsonData("messages.cartAdded"))
+                .clickOnViewCart()
+                .verifyProductDetailsOnCart(
+                        testData.getJsonData("product2.name"),
+                        testData.getJsonData("product2.price"),
+                        testData.getJsonData("product2.quantity"),
+                        testData.getJsonData("product2.total")
+                );
+
     }
 
 
