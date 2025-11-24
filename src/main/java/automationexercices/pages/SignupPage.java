@@ -156,5 +156,11 @@ public class SignupPage {
         return this;
     }
 
+    @Step("Verify user is on signup page")
+    public SignupPage verifyOnSignupPage() {
+        driver.verification().isElementVisible(createAccountButton);
+        return this;
+    }
+
 
 }

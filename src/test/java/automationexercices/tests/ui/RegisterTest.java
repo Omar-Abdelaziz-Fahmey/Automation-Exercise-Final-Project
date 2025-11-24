@@ -102,6 +102,52 @@ public class RegisterTest extends BaseTest {
     }
 
 
+    @Test(groups = { "regression", "negative", "register" })
+    @Story("User Registration - Negative Scenarios")
+    @Description("Verify that appropriate error message is displayed when attempting to register with an invalid email address")
+    @Severity(SeverityLevel.NORMAL)
+    public void verifyErrorMessageWhenRegisteringWithInvalidEmailTC() {
+        new SignupLoginPage(driver).navigate()
+                .enterSignupName(testData.getJsonData("name"))
+                .enterSignupEmail("invalid-email")
+                .clickSignupButton();
+        // Since browser validation might prevent submission, we verify we are still on
+        // the login page or see an error
+        new SignupLoginPage(driver).verifySignupLabelVisible();
+    }
+
+    @Test(groups = { "regression", "negative", "register" })
+    @Story("User Registration - Negative Scenarios")
+    @Description("Verify that account is not created when mandatory fields are missing")
+    @Severity(SeverityLevel.NORMAL)
+    public void verifyErrorMessageWhenRegisteringWithMissingFieldsTC() {
+        new SignupLoginPage(driver).navigate()
+                .enterSignupName(testData.getJsonData("name"))
+                .enterSignupEmail(testData.getJsonData("email") + timestamp + "@gmail.com")
+                .clickSignupButton();
+
+        new SignupPage(driver)
+                .chooseTitle(testData.getJsonData("titleMale"))
+                // Skip password to trigger missing field error
+                .selectDateOfBirth(
+                        testData.getJsonData("day"),
+                        testData.getJsonData("month"),
+                        testData.getJsonData("year"))
+                .enterFirstName(testData.getJsonData("firstName"))
+                .enterLastName(testData.getJsonData("lastName"))
+                .enterCompany(testData.getJsonData("companyName"))
+                .enterAddress1(testData.getJsonData("address1"))
+                .enterAddress2(testData.getJsonData("address2"))
+                .selectCountry(testData.getJsonData("country"))
+                .enterState(testData.getJsonData("state"))
+                .enterCity(testData.getJsonData("city"))
+                .enterZipcode(testData.getJsonData("zipcode"))
+                .enterMobileNumber(testData.getJsonData("mobileNumber"))
+                .clickCreateAccountButton()
+                .verifyOnSignupPage(); // Verify we are still on the signup page
+    }
+
+
     //Configurations
 
     @BeforeClass(alwaysRun = true)

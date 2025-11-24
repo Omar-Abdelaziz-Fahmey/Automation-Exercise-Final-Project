@@ -83,15 +83,51 @@ public class ContactUsPage {
     @Step("Verify alert message after submit: {expectedMessage}")
     public ContactUsPage verifyAlertMessageAfterSubmit(String expectedMessage) {
         //there should  be a message displayed after submitting the review in a popup message "Press OK to proceed!" and should press ok
-        String alertText = driver.alert().getAlertText();
-        driver.verification().Equals(alertText, expectedMessage, "Review submission message is not matched");
+        String actualAlertText = driver.alert().getAlertText();
+        LogsManager.info("Verifying alert message after submit actual: " + actualAlertText + " and expected :" + expectedMessage);
+        driver.verification().Equals(actualAlertText, expectedMessage, "Review submission message is not matched");
         return this;
     }
 
     @Step("Verify success message after submit: {expectedMessage}")
     public ContactUsPage verifySuccessMessageAfterSubmit(String expectedMessage) {
         String actualMessage = driver.element().getText(successMessage);
+        LogsManager.info("Verifying success message after submit actual: " + actualMessage + " and expected :" + expectedMessage);
         driver.verification().Equals(actualMessage, expectedMessage, "Success message is not matched");
         return this;
     }
+    @Step("Verify success message is not visible")
+    public ContactUsPage verifySuccessMessageIsNotVisible(){
+        LogsManager.info("Verifying success message is not visible");
+        driver.verification().isElementNotVisible(successMessage);
+        return this;
+    }
+
+
+    @Step("Verify Name field validation message")
+    public ContactUsPage verifyNameFieldValidationMessage() {
+        String validationMessage = driver.element().findElement(nameInput).getAttribute("validationMessage");
+        driver.verification().Equals(validationMessage, "Please fill out this field.", "Validation message is not matched");
+        return this;
+    }
+    @Step("Verify Email field validation message")
+    public ContactUsPage verifyEmailFieldValidationMessage() {
+        String validationMessage = driver.element().findElement(emailInput).getAttribute("validationMessage");
+        driver.verification().Equals(validationMessage, "Please fill out this field.", "Validation message is not matched");
+        return this;
+    }
+    @Step("Verify Subject field validation message")
+    public ContactUsPage verifySubjectFieldValidationMessage() {
+        String validationMessage = driver.element().findElement(subjectInput).getAttribute("validationMessage");
+        driver.verification().Equals(validationMessage, "Please fill out this field.", "Validation message is not matched");
+        return this;
+    }
+    @Step("Verify Message field validation message")
+    public ContactUsPage verifyMessageFieldValidationMessage() {
+        String validationMessage = driver.element().findElement(messageInput).getAttribute("validationMessage");
+        driver.verification().Equals(validationMessage, "Please fill out this field.", "Validation message is not matched");
+        return this;
+    }
 }
+
+

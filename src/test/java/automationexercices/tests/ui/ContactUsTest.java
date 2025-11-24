@@ -46,7 +46,8 @@ public class ContactUsTest extends BaseTest {
 
 
     }
-    @Test(dependsOnMethods = "submitContactUsFormWithValidDataWithoutAttachmentTest",groups = {"regression", "contactus"})
+
+    @Test(dependsOnMethods = "submitContactUsFormWithValidDataWithoutAttachmentTest", groups = {"regression", "contactus"})
     @Story("Submit Contact Us Form with Attachment - Happy Path")
     @Description("Verify that users can successfully submit the Contact Us form with valid data and an attachment")
     @Severity(SeverityLevel.CRITICAL)
@@ -67,18 +68,50 @@ public class ContactUsTest extends BaseTest {
     }
 
 
+    @Test(groups = {"regression", "contactus"})
+    @Story("Submit Contact Us Form with Empty Name - Negative")
+    @Description("Verify that users cannot submit the Contact Us form with an empty Name field")
+    @Severity(SeverityLevel.NORMAL)
+    public void submitContactUsFormWithEmptyNameTest() {
+        new ContactUsPage(driver).navigate()
+                .addReview(
+                        "",
+                        "",
+                        testData.getJsonData("contacts.subject"),
+                        testData.getJsonData("contacts.message")
+                )
+                .verifyNameFieldValidationMessage();
+    }
 
+    @Test(groups = {"regression", "contactus"})
+    @Story("Submit Contact Us Form with Empty Email - Negative")
+    @Description("Verify that users cannot submit the Contact Us form with an empty Email field")
+    @Severity(SeverityLevel.NORMAL)
+    public void submitContactUsFormWithEmptyEmailTest() {
+        new ContactUsPage(driver).navigate()
+                .addReview(
+                        testData.getJsonData("contacts.name"),
+                        "",
+                        testData.getJsonData("contacts.subject"),
+                        testData.getJsonData("contacts.message")
+                )
+                .verifyEmailFieldValidationMessage();
+    }
 
-
-
-
-
-
-
-
-
-
-
+    @Test(groups = {"regression", "contactus"})
+    @Story("Submit Contact Us Form with Empty Message - Negative")
+    @Description("Verify that users cannot submit the Contact Us form with an empty Message field")
+    @Severity(SeverityLevel.NORMAL)
+    public void submitContactUsFormWithEmptyMessageTest() {
+        new ContactUsPage(driver).navigate()
+                .addReview(
+                        testData.getJsonData("contacts.name"),
+                        "",
+                        testData.getJsonData("contacts.subject"),
+                        ""
+                )
+                .verifyMessageFieldValidationMessage();
+    }
 
 
     @BeforeClass
