@@ -3,8 +3,8 @@ package automationexercices.validations;
 import automationexercices.FileUtils;
 import automationexercices.utils.WaitManager;
 import automationexercices.utils.actions.ElementActions;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import automationexercices.utils.logs.LogsManager;
+import org.openqa.selenium.*;
 
 public abstract class BaseAssertion {
     protected WebDriver driver;
@@ -33,15 +33,19 @@ public abstract class BaseAssertion {
     }
 
     public void isElementVisible(By locator) {
-        boolean flag = waitManager.fluentWait().until(driver1 ->
-        {
-            try {
-                driver1.findElement(locator).isDisplayed();
-                return true;
-            } catch (Exception e) {
-                return false;
-            }
-        });
+        boolean flag = false;
+        try {
+            flag = waitManager.fluentWait().until(driver1 -> {
+                try {
+                    return driver1.findElement(locator).isDisplayed();
+                } catch (NoSuchElementException | StaleElementReferenceException e) {
+                    return false;
+                }
+            });
+        } catch (TimeoutException e) {
+            // Element was not found or not visible within the timeout period
+            flag = false;
+        }
         assertTrue(flag, "Element is not visible: " + locator);
     }
 
