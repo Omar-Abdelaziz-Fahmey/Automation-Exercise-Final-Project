@@ -16,6 +16,7 @@
   "state": "Automation_State",
   "city": "Automation_City",
   "zipcode": "12345",
+  "invalidZipcode": "invalidZipcode",
   "mobileNumber": "1234567890",
   "messages" :
   {
