@@ -25,7 +25,7 @@ public class ProductsTest extends BaseTest {
     @Test
     @Description("Search for a product and validate its details")
     public void searchForProductAndValidateDetailsTest() {
-        new ProductsPage(driver).navigate()
+        new ProductsPage(driver).navigationBar.clickProductsButton()
                 .searchProduct(testData.getJsonData("searchedProduct.name"))
                 .validateProductDetails(
                         testData.getJsonData("searchedProduct.name"),
@@ -35,7 +35,7 @@ public class ProductsTest extends BaseTest {
     @Test
     @Description("Add product to cart without logging in")
     public void addToCartWithoutLoggingInTest() {
-        new ProductsPage(driver).navigate()
+        new ProductsPage(driver).navigationBar.clickProductsButton()
                 .clickOnAddToCart(testData.getJsonData("product1.name"))
                 .validateProductAddedToCart(
                         testData.getJsonData("messages.cartAdded")
