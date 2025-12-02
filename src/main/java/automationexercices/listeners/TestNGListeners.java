@@ -17,7 +17,13 @@ import org.testng.*;
 import java.io.File;
 
 public class TestNGListeners implements IExecutionListener, IInvokedMethodListener, ITestListener {
+
+    public void onStart(ISuite suite) {
+        suite.getXmlSuite().setName("Automation Exercise Selenium");
+    }
+
     public void onExecutionStart() {
+
         LogsManager.info("Test Execution started");
         cleanTestOutputDirectories();
         LogsManager.info("Directories cleaned");
