@@ -5,9 +5,7 @@
         <classes>
             <class name="automationexercices.tests.ui.FullE2ESenarioTest_001"/>
             <class name="automationexercices.tests.ui.FullE2ESenarioTest_002"/>
-            <class name="automationexercices.tests.ui.FullE2ESenarioTest_002"/>
-            <class name="automationexercices.tests.ui.InvoiceTest"/>
-            <class name="automationexercices.tests.ui.PaymentTest"/>
+            <class name="automationexercices.tests.ui.FullE2ESenarioTest_003"/>
         </classes>
     </test>
 </suite>
