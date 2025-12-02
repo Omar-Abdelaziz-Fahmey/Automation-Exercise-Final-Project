@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 public class CheckoutTest extends BaseTest {
     String timestamp = TimeManager.getSimpleTimestamp();
 
-    @Test(groups = {"regression", "smoke", "checkout", "setup"})
+    @Test(groups = { "checkout", "regression" })
     @Story("Test Data Setup")
     @Description("Create a new user account via API as a precondition for checkout flow testing")
     @Severity(SeverityLevel.CRITICAL)
@@ -46,7 +46,7 @@ public class CheckoutTest extends BaseTest {
                 .verifyUserCreatedSuccessfully();
     }
 
-    @Test(dependsOnMethods = "registerNewAccount", groups = {"regression", "smoke", "checkout", "authentication"})
+    @Test(dependsOnMethods = "registerNewAccount", groups = { "checkout", "regression" })
     @Story("User Authentication")
     @Description("Verify that user can successfully login with valid credentials and username is displayed correctly")
     @Severity(SeverityLevel.CRITICAL)
@@ -59,7 +59,7 @@ public class CheckoutTest extends BaseTest {
                 .verifyLoggedInUserName(testData.getJsonData("name"));
     }
 
-    @Test(dependsOnMethods = {"loginToAccount","registerNewAccount"}, groups = {"regression", "smoke", "checkout", "cart"})
+    @Test(dependsOnMethods = "loginToAccount", groups = { "checkout", "regression" })
     @Story("Shopping Cart Management")
     @Description("Verify that products can be added to cart and cart displays correct product details including name, price, quantity and total")
     @Severity(SeverityLevel.CRITICAL)
@@ -77,7 +77,7 @@ public class CheckoutTest extends BaseTest {
                 );
     }
 
-    @Test(dependsOnMethods ={"addProductToCart","loginToAccount","registerNewAccount"}, groups = {"regression", "smoke", "checkout", "e2e"})
+    @Test(dependsOnMethods = "addProductToCart", groups = { "checkout", "regression" })
     @Story("Checkout Process")
     @Description("Verify complete checkout process including delivery and billing address validation for logged-in user with products in cart")
     @Severity(SeverityLevel.CRITICAL)
@@ -112,7 +112,7 @@ public class CheckoutTest extends BaseTest {
                 );
     }
 
-    @Test(dependsOnMethods = {"checkout","loginToAccount","registerNewAccount"}, groups = {"regression", "cleanup"})
+    @Test(dependsOnMethods = "checkout", groups = { "checkout", "regression" })
     @Story("Test Data Cleanup")
     @Description("Delete the test user account created during test execution to maintain clean test environment")
     @Severity(SeverityLevel.MINOR)

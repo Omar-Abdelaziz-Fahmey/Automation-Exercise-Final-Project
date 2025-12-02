@@ -20,7 +20,13 @@ import org.testng.annotations.Test;
 @Owner("Omar")
 public class InvoiceTest  extends BaseTest {
     String timestamp = TimeManager.getSimpleTimestamp();
-    @Test
+
+
+
+    @Test(groups = { "invoice", "regression" })
+    @Story("Invoice Flow 1: Register -> Checkout")
+    @Description("Register a new account")
+    @Severity(SeverityLevel.CRITICAL)
     public void registerNewAccount() {
         new UserManagementAPI().createRegisterUserAccount(
                         testData.getJsonData("name"),
@@ -44,7 +50,10 @@ public class InvoiceTest  extends BaseTest {
                 .verifyUserCreatedSuccessfully();
     }
 
-    @Test(dependsOnMethods = "registerNewAccount")
+    @Test(dependsOnMethods = "registerNewAccount", groups = { "invoice", "regression" })
+    @Story("Invoice Flow 1: Register -> Checkout")
+    @Description("Login to the account")
+    @Severity(SeverityLevel.CRITICAL)
     public void loginToAccount() {
         new SignupLoginPage(driver).navigate()
                 .enterLoginEmail(testData.getJsonData("email") + timestamp + "@gmail.com")
@@ -54,7 +63,10 @@ public class InvoiceTest  extends BaseTest {
                 .verifyLoggedInUserName(testData.getJsonData("name"));
     }
 
-    @Test(dependsOnMethods = {"loginToAccount", "registerNewAccount"})
+    @Test(dependsOnMethods = "loginToAccount", groups = { "invoice", "regression" })
+    @Story("Invoice Flow 1: Register -> Checkout")
+    @Description("Add product to cart")
+    @Severity(SeverityLevel.CRITICAL)
     public void addProductToCart() {
         new ProductsPage(driver)
                 .navigate()
@@ -69,7 +81,10 @@ public class InvoiceTest  extends BaseTest {
                 );
     }
 
-    @Test(dependsOnMethods = {"addProductToCart", "loginToAccount", "registerNewAccount"})
+    @Test(dependsOnMethods = "addProductToCart", groups = { "invoice", "regression" })
+    @Story("Invoice Flow 1: Register -> Checkout")
+    @Description("Proceed to checkout")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkout() {
         new CartPage(driver)
                 .clickOnProceedToCheckout()
@@ -101,7 +116,10 @@ public class InvoiceTest  extends BaseTest {
                 );
     }
 
-    @Test(dependsOnMethods = {"checkout", "addProductToCart", "loginToAccount", "registerNewAccount"})
+    @Test(dependsOnMethods = "checkout", groups = { "invoice", "regression" })
+    @Story("Invoice Flow 1: Register -> Checkout")
+    @Description("Make payment")
+    @Severity(SeverityLevel.CRITICAL)
     public void paymentTest() {
         new CheckoutPage(driver)
                 .clickOnPlaceOrder()
@@ -115,14 +133,20 @@ public class InvoiceTest  extends BaseTest {
                 .verifyPaymentSuccessMessage(testData.getJsonData("messages.paymentSuccess"));
     }
 
-    @Test(dependsOnMethods = {"paymentTest","checkout", "addProductToCart", "loginToAccount", "registerNewAccount"})
+    @Test(dependsOnMethods = "paymentTest", groups = { "invoice", "regression" })
+    @Story("Invoice Flow 1: Register -> Checkout")
+    @Description("Download invoice")
+    @Severity(SeverityLevel.NORMAL)
     public void downloadInvoice() {
         new PaymentPage(driver)
                 .clickOnDownloadInvoiceButton()
                 .verifyDownloadedFile(testData.getJsonData("invoiceName"));
     }
 
-    @Test(dependsOnMethods = {"paymentTest","checkout","loginToAccount","registerNewAccount"})
+    @Test(dependsOnMethods = "downloadInvoice", groups = { "invoice", "regression" })
+    @Story("Invoice Flow 1: Register -> Checkout")
+    @Description("Delete account")
+    @Severity(SeverityLevel.MINOR)
     public void deleteAccountAsPostCondition() {
         new UserManagementAPI()
                 .deleteUserAccount( testData.getJsonData("email") + timestamp + "@gmail.com",
@@ -139,13 +163,16 @@ public class InvoiceTest  extends BaseTest {
 
 
 
+    // another flow starting from adding product to cart without logging in
 
 
 
 
 
-    @Test(dependsOnMethods = {"deleteAccountAsPostCondition"})
-    public void verifyProductDetailsOnCartWithOutLogInTC() {
+    @Test(groups = { "invoice", "regression" })
+    @Story("Invoice Flow 2: Checkout -> Register")
+    @Description("Add product to cart without login")
+    @Severity(SeverityLevel.CRITICAL)    public void verifyProductDetailsOnCartWithOutLogInTC() {
         new ProductsPage(driver)
                 .navigate()
                 .clickOnAddToCart(testData.getJsonData("product.name"))
@@ -158,7 +185,12 @@ public class InvoiceTest  extends BaseTest {
                         testData.getJsonData("product.total")
                 );
     }
-    @Test(dependsOnMethods = {"verifyProductDetailsOnCartWithOutLogInTC"})
+
+
+    @Test(dependsOnMethods = "verifyProductDetailsOnCartWithOutLogInTC", groups = { "invoice", "regression" })
+    @Story("Invoice Flow 2: Checkout -> Register")
+    @Description("Proceed to checkout without register")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkoutWithoutRegister() {
         new CartPage(driver)
                 .clickOnProceedToCheckoutWithOutRegister()
@@ -167,7 +199,10 @@ public class InvoiceTest  extends BaseTest {
 
     }
 
-    @Test(dependsOnMethods = {"checkoutWithoutRegister","verifyProductDetailsOnCartWithOutLogInTC"})
+    @Test(dependsOnMethods = "checkoutWithoutRegister", groups = { "invoice", "regression" })
+    @Story("Invoice Flow 2: Checkout -> Register")
+    @Description("Register during checkout")
+    @Severity(SeverityLevel.CRITICAL)
     public void registerDuringCheckout() {
         new SignupLoginPage(driver)
                 .enterSignupEmail(testData.getJsonData("email") + timestamp + "@gmail.com")
@@ -198,7 +233,10 @@ public class InvoiceTest  extends BaseTest {
                 .clickCreateAccountButton()
                 .verifyAccountCreated();
     }
-    @Test(dependsOnMethods = {"registerDuringCheckout","checkoutWithoutRegister","verifyProductDetailsOnCartWithOutLogInTC"})
+    @Test(dependsOnMethods = "registerDuringCheckout", groups = { "invoice", "regression" })
+    @Story("Invoice Flow 2: Checkout -> Register")
+    @Description("Complete checkout after registering")
+    @Severity(SeverityLevel.CRITICAL)
     public void completeCheckoutAfterRegistering() {
         new CartPage(driver)
                 .navigate()
@@ -238,7 +276,10 @@ public class InvoiceTest  extends BaseTest {
 
     }
 
-    @Test(dependsOnMethods = {"completeCheckoutAfterRegistering","registerDuringCheckout","checkoutWithoutRegister","verifyProductDetailsOnCartWithOutLogInTC"})
+    @Test(dependsOnMethods = "completeCheckoutAfterRegistering", groups = { "invoice", "regression" })
+    @Story("Invoice Flow 2: Checkout -> Register")
+    @Description("Make payment after registering")
+    @Severity(SeverityLevel.CRITICAL)
     public void paymentAfterRegisteringTest() {
         new CheckoutPage(driver)
                 .clickOnPlaceOrder()
@@ -251,14 +292,20 @@ public class InvoiceTest  extends BaseTest {
                 .verifyPaymentSuccessMessage(testData.getJsonData("messages.paymentSuccess"));
     }
 
-    @Test(dependsOnMethods = {"paymentAfterRegisteringTest","completeCheckoutAfterRegistering","registerDuringCheckout","checkoutWithoutRegister","verifyProductDetailsOnCartWithOutLogInTC"})
+    @Test(dependsOnMethods = "paymentAfterRegisteringTest", groups = { "invoice", "regression" })
+    @Story("Invoice Flow 2: Checkout -> Register")
+    @Description("Download invoice after registering")
+    @Severity(SeverityLevel.NORMAL)
     public void downloadInvoiceAfterRegisteringTest() {
         new PaymentPage(driver)
                 .clickOnDownloadInvoiceButton()
                 .verifyDownloadedFile(testData.getJsonData("invoiceName"));
     }
 
-    @Test(dependsOnMethods ={"downloadInvoiceAfterRegisteringTest"} )
+    @Test(dependsOnMethods = "downloadInvoiceAfterRegisteringTest", groups = { "invoice", "regression" })
+    @Story("Invoice Flow 2: Checkout -> Register")
+    @Description("Delete account after registering")
+    @Severity(SeverityLevel.MINOR)
     public void deleteAccountAsPostConditionAfterRegisteringTest() {
         new UserManagementAPI()
                 .deleteUserAccount( testData.getJsonData("email") + timestamp + "@gmail.com",

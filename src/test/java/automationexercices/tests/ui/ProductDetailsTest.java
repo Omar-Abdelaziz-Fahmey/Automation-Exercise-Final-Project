@@ -19,7 +19,9 @@ import org.testng.annotations.Test;
 @Owner("Omar")
 public class ProductDetailsTest extends BaseTest {
 
-    @Test
+    @Test(groups = { "product", "regression" })
+    @Story("Product Details")
+    @Description("Verify product details without login")
     public void verifyProductDetailsWithoutLoginTC() {
         new ProductsPage(driver).navigate()
                 .clickOnViewProduct(testData.getJsonData("product.name"))
@@ -29,7 +31,9 @@ public class ProductDetailsTest extends BaseTest {
                 );
     }
 
-    @Test
+    @Test(groups = { "product", "regression" })
+    @Story("Product Details")
+    @Description("Verify review message without login")
     public void verifyReviewMessageWithoutLoginTC() {
         new ProductsPage(driver).navigate()
                 .clickOnViewProduct(testData.getJsonData("product.name"))

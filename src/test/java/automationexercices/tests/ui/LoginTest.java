@@ -26,7 +26,7 @@ public class LoginTest extends BaseTest {
     //Tests
 
     @Description("Verify user can login with valid credentials")
-    @Test
+    @Test(groups = { "login", "regression" })
     public void loginWithValidCredentialsTest() {
         // Test logic for logging in with valid credentials
         new UserManagementAPI().createRegisterUserAccount(
@@ -50,7 +50,7 @@ public class LoginTest extends BaseTest {
     }
 
     @Description("Verify user can't login with invalid email")
-    @Test
+    @Test(groups = { "login", "regression" })
     public void loginWithInvalidEmailTest() {
         // Test logic for logging in with an invalid email
         new UserManagementAPI().createRegisterUserAccount(
@@ -75,7 +75,7 @@ public class LoginTest extends BaseTest {
 
 
     @Description("Verify user can't login with incorrect password")
-    @Test
+    @Test(groups = { "login", "regression" })
     public void loginWithIncorrectPasswordTest() {
         // Test logic for logging in with an incorrect password
         new UserManagementAPI().createRegisterUserAccount(
@@ -98,7 +98,7 @@ public class LoginTest extends BaseTest {
                 .verifyUserDeletedSuccessfully();
     }
     @Description("Verify user can logout")
-    @Test
+    @Test(groups = { "login", "regression" })
     public void logoutTest(){
         new UserManagementAPI().createRegisterUserAccount(
                 testData.getJsonData("name"),

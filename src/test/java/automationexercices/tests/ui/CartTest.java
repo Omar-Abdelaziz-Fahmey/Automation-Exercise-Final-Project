@@ -18,7 +18,9 @@ import org.testng.annotations.Test;
 public class CartTest extends BaseTest {
 
 
-    @Test
+    @Test(groups = { "cart", "regression" })
+    @Story("Cart Management")
+    @Description("Verify product details on cart without login")
     @Severity(SeverityLevel.CRITICAL)
 
     public void verifyProductDetailsOnCartWithOutLogInTC(){
@@ -33,9 +35,9 @@ public class CartTest extends BaseTest {
                         testData.getJsonData("product.total")
                 );
     }
-    @Test
+    @Test(groups = { "cart", "regression" })
+    @Story("Cart Management")
     @Description("Verify product quantity in cart")
-    @Severity(SeverityLevel.CRITICAL)
     public void verifyProductQuantityInCartTC(){
         new ProductsPage(driver).navigate()
                 .clickOnViewProduct(testData.getJsonData("product2.name"))

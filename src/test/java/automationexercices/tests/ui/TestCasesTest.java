@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
 public class TestCasesTest extends BaseTest {
 
 
-    @Test(groups = {"regression"})
+    @Test(groups = { "testcases", "regression" })
     @Description("Navigate to Test Cases page and validate it is displayed")
     public void navigateToTestCasesPageTest() {
         new NavigationBarComponent(driver)

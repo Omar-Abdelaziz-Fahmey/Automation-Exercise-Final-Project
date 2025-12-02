@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
 @Owner("Omar")
 public class ContactUsTest extends BaseTest {
 
-    @Test(groups = {"regression", "smoke", "contactus"})
+    @Test(groups = { "contactus", "regression" })
     @Story("Contact Us Page Navigation - Happy Path")
     @Description("Verify that users can navigate to the Contact Us page from the navigation bar")
     @Severity(SeverityLevel.NORMAL)
@@ -27,7 +27,7 @@ public class ContactUsTest extends BaseTest {
                 .verifyContactUsPageIsDisplayed();
     }
 
-    @Test(groups = {"regression", "contactus"})
+    @Test(groups = { "contactus", "regression" })
     @Story("Submit Contact Us Form without Attachment - Happy Path")
     @Description("Verify that users can successfully submit the Contact Us form with valid data without attachment")
     @Severity(SeverityLevel.CRITICAL)
@@ -47,7 +47,7 @@ public class ContactUsTest extends BaseTest {
 
     }
 
-    @Test(dependsOnMethods = "submitContactUsFormWithValidDataWithoutAttachmentTest", groups = {"regression", "contactus"})
+    @Test(groups = { "contactus", "regression" })
     @Story("Submit Contact Us Form with Attachment - Happy Path")
     @Description("Verify that users can successfully submit the Contact Us form with valid data and an attachment")
     @Severity(SeverityLevel.CRITICAL)
@@ -83,7 +83,7 @@ public class ContactUsTest extends BaseTest {
                 .verifyNameFieldValidationMessage();
     }
 
-    @Test(groups = {"regression", "contactus"})
+    @Test(groups = { "contactus", "regression" })
     @Story("Submit Contact Us Form with Empty Email - Negative")
     @Description("Verify that users cannot submit the Contact Us form with an empty Email field")
     @Severity(SeverityLevel.NORMAL)

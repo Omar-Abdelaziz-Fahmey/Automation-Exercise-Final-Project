@@ -22,7 +22,8 @@ public class ProductsTest extends BaseTest {
     String timestamp = TimeManager.getSimpleTimestamp();
 
 
-    @Test
+    @Test(groups = { "product", "regression" })
+    @Story("Product Management")
     @Description("Search for a product and validate its details")
     public void searchForProductAndValidateDetailsTest() {
         new ProductsPage(driver).navigationBar.clickProductsButton()
@@ -32,7 +33,8 @@ public class ProductsTest extends BaseTest {
                         testData.getJsonData("searchedProduct.price")
                 );
     }
-    @Test
+    @Test(groups = { "product", "regression" })
+    @Story("Product Management")
     @Description("Add product to cart without logging in")
     public void addToCartWithoutLoggingInTest() {
         new ProductsPage(driver).navigationBar.clickProductsButton()
@@ -43,7 +45,8 @@ public class ProductsTest extends BaseTest {
     }
 
 
-    @Test
+    @Test(groups = { "product", "regression" })
+    @Story("Product Management")
     @Description("Verify Subscription in Product page")
     public void verifySubscriptionInProductPageTest() {
         new ProductsPage(driver).navigate()

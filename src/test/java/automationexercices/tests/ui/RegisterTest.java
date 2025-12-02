@@ -22,7 +22,7 @@ public class RegisterTest extends BaseTest {
 
 
     //Test
-    @Test(groups = {"regression", "smoke", "register"})
+    @Test(groups = { "register", "regression" })
     @Story("User Registration - Happy Path")
     @Description("Verify that a new user can successfully register with valid data and complete the registration process")
     @Severity(SeverityLevel.CRITICAL)
@@ -61,7 +61,7 @@ public class RegisterTest extends BaseTest {
                 .verifyUserDeletedSuccessfully();
     }
 
-    @Test(groups = {"regression", "negative", "register"})
+    @Test(groups = { "register", "regression" })
     @Story("User Registration - Negative Scenarios")
     @Description("Verify that appropriate error message is displayed when attempting to register with an already existing email address")
     @Severity(SeverityLevel.CRITICAL)
@@ -102,7 +102,7 @@ public class RegisterTest extends BaseTest {
     }
 
 
-    @Test(groups = { "regression", "negative", "register" })
+    @Test(groups = { "register", "regression" })
     @Story("User Registration - Negative Scenarios")
     @Description("Verify that appropriate error message is displayed when attempting to register with an invalid email address")
     @Severity(SeverityLevel.CRITICAL)
@@ -116,7 +116,7 @@ public class RegisterTest extends BaseTest {
         new SignupLoginPage(driver).verifySignupLabelVisible();
     }
 
-    @Test(groups = { "regression", "negative", "register" })
+    @Test(groups = { "register", "regression" })
     @Story("User Registration - Negative Scenarios")
     @Description("Verify that account is not created when Password field is missing")
     @Severity(SeverityLevel.CRITICAL)
@@ -147,7 +147,7 @@ public class RegisterTest extends BaseTest {
                 .verifyOnSignupPage(); // Verify we are still on the signup page
     }
 
-    @Test(groups = { "regression", "negative", "register" })
+    @Test(groups = { "register", "regression" })
     @Story("User Registration - Negative Scenarios")
     @Description("Verify that account is not created when Name fields are missing")
     @Severity(SeverityLevel.CRITICAL)
@@ -178,7 +178,7 @@ public class RegisterTest extends BaseTest {
 
 
     }
-    @Test(groups = { "regression", "negative", "register" })
+    @Test(groups = { "register", "regression" })
     @Story("User Registration - Negative Scenarios")
     @Description("Verify that account is not created with Invalid Zipcode")
     @Severity(SeverityLevel.CRITICAL)
