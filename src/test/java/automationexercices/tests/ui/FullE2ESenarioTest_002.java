@@ -12,6 +12,12 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+
+@Epic("Automation Exercise")
+@Feature("UI Full E2E Scenario")
+@Story("Full E2E Flow")
+@Severity(SeverityLevel.CRITICAL)
+@Owner("Omar")
 public class FullE2ESenarioTest_002 extends BaseTest {
 
     String timestamp = TimeManager.getSimpleTimestamp();
