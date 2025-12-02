@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Automation Exercise Suite">
+    <test name="UI Tests">
+        <classes>
+            <class name="automationexercices.tests.ui.ContactUsTest"/>
+            <class name="automationexercices.tests.ui.InvoiceTest"/>
+            <class name="automationexercices.tests.ui.LoginTest"/>
+            <class name="automationexercices.tests.ui.PaymentTest"/>
+            <class name="automationexercices.tests.ui.ProductDetailsTest"/>
+            <class name="automationexercices.tests.ui.ProductsTest"/>
+            <class name="automationexercices.tests.ui.RegisterTest"/>
+            <class name="automationexercices.tests.ui.TestCasesTest"/>
+        </classes>
+    </test>
+</suite>
