@@ -22,6 +22,20 @@ public class EdgeFactory extends AbstractDriver {
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--disable-infobars");
         options.addArguments("--start-maximized");
+
+        options.addArguments("--host-resolver-rules=" +
+                "MAP googleads.g.doubleclick.net 127.0.0.1," +
+                "MAP pagead2.googlesyndication.com 127.0.0.1," +
+                "MAP tpc.googlesyndication.com 127.0.0.1," +
+                "MAP www.googletagservices.com 127.0.0.1," +
+                "MAP adservice.google.com 127.0.0.1," +
+                "MAP ads.google.com 127.0.0.1," +
+                "MAP www.googleadservices.com 127.0.0.1," +
+                "MAP partner.googleadservices.com 127.0.0.1," +
+                "MAP securepubads.g.doubleclick.net 127.0.0.1," +
+                "MAP ad.doubleclick.net 127.0.0.1"
+        );
+
         Map<String, Object> prefs = new HashMap<>();
         String userDir = System.getProperty("user.dir");
         String downloadPath = userDir + "\\src\\test\\resources\\downloads";
