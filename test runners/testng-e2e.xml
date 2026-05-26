@@ -3,9 +3,9 @@
 <suite name="E2E Suite">
     <test name="E2E Tests">
         <classes>
-            <class name="automationexercices.tests.ui.FullE2ESenarioTest_001"/>
-            <class name="automationexercices.tests.ui.FullE2ESenarioTest_002"/>
-            <class name="automationexercices.tests.ui.FullE2ESenarioTest_003"/>
+            <class name="automationexercices.tests.ui.FullE2EScenarioOneTest"/>
+            <class name="automationexercices.tests.ui.FullE2EScenarioTwoTest"/>
+            <class name="automationexercices.tests.ui.FullE2EScenarioThreeTest"/>
         </classes>
     </test>
 </suite>

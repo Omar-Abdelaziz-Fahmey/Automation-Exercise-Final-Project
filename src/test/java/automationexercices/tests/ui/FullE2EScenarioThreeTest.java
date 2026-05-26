@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
 @Story("Full E2E Flow 003")
 @Severity(SeverityLevel.CRITICAL)
 @Owner("Omar")
-public class FullE2ESenarioTest_003 extends BaseTest {
+public class FullE2EScenarioThreeTest extends BaseTest {
     String timestamp = TimeManager.getSimpleTimestamp();
 
     @BeforeClass
